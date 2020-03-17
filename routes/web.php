@@ -21,3 +21,4 @@ Auth::routes();
 Route::resource('/mission', 'MissionController');
 
 Route::post('/mission/{id}/file_upload', 'MissionController@file_upload');
+
