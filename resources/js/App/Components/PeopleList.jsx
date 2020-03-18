@@ -1,11 +1,13 @@
 import React from "react";
+import PersonStatusForm  from "./PersonStatusForm";
 
 export default class PeopleList extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            data: []
+            data: [],
+            statuses: null
         };
     }
 
@@ -17,7 +19,15 @@ export default class PeopleList extends React.Component {
                 this.setState({
                     data: data
                 });
-            });
+            })
+        fetch("api/statuses")
+        .then(response =>response.json())
+        .then(data => {
+            this.setState({
+               statuses: data 
+            })
+            
+        })
     }
 
     render() {
@@ -29,6 +39,15 @@ export default class PeopleList extends React.Component {
                         <li key={person.id}>
                           <div className="name">{person.name}</div>
                           <img src={person.image_url} />
+                          
+                          {
+                          this.state.statuses === null} ?
+                          '' :
+                          <PersonStatusForm 
+                            id={person.id}
+                            status={person.status_id}
+                            statuses = {this.state.statuses}
+                          />
                         </li>
                     ))}
                 </ul>
